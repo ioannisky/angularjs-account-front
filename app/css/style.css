@@ -127,6 +127,12 @@ li.selected {
 
 }
 
+.item-list {
+	overflow-y:scroll;
+	position: relative;
+	height: 350px;
+}
+
 
 
 

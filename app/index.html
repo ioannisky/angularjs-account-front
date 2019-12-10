@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="accountApp">
+<html lang="en" ng-app="accountApp" >
 	<head>
 		<meta charset="utf-8">
 		<title>AngularJS Account Front</title>
@@ -8,14 +8,16 @@
 		<script src="app.js"></script>
 	</head>
 	<body>
-		<div id="main-screen" ng-controller="MainListController as ctrl">
+		<div id="main-screen" ng-controller="MainListController as ctrl" keypress-directive>
 			<h1>PLEASE SELECT THE <i>FROM</i> ACCOUNT</h1>
 			<h2>To void transaction press cancel.</h2>
 			<div id="accounts-area">
 				<div id="titlebox">AVAILABLE ACCOUNTS</div>
-				<ul>
-					<li ng-repeat="account in ctrl.accounts" id="account-{{account.id}}" ng-class="{selected: account == ctrl.accounts[ctrl.selectedIndex]}">{{account.name}}</li>
-				</ul>
+				<div class="item-list">
+					<ul>
+						<li ng-repeat="account in ctrl.accounts" id="account-{{account.id}}" ng-class="{selected: account == ctrl.accounts[ctrl.selectedIndex]}">{{account.name}}</li>
+					</ul>
+				</div>
 			</div>
 			<div id="controls-area">
 				<div class="button" ng-disabled="ctrl.display" ng-click="moveUp()"><span>UP</span></div>

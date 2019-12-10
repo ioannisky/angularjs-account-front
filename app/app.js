@@ -9,6 +9,11 @@ angular.module('accountApp', []).controller("MainListController",function MainLi
 	this.selectedIndex=0;
 	this.display=false;
 
+	$scope.keyDownEvent=function(event) {
+		alert(event);
+
+	}
+
 	$scope.moveUp=function() {
 		if(self.display==true)
 			return;
@@ -17,12 +22,14 @@ angular.module('accountApp', []).controller("MainListController",function MainLi
 			self.selectedIndex=self.accounts.length+self.selectedIndex;
 		}
 
+		$scope.scrollToPosition();
 	}
 
 	$scope.moveDown=function() {
 		if(self.display==true)
 			return;
 		self.selectedIndex=(self.selectedIndex+1)%self.accounts.length;
+		$scope.scrollToPosition();
 	}
 
 	$scope.selectItem=function() {
@@ -36,11 +43,47 @@ angular.module('accountApp', []).controller("MainListController",function MainLi
 			});
 
 		},5000);
+	}
+
+	$scope.scrollToPosition=function() {
+		var itemElement=document.getElementById("account-"+self.accounts[self.selectedIndex].id);
+		var listElement=document.getElementsByClassName("item-list")[0];
 		
+		var viewPortHeight=listElement.clientHeight;
+		var viewPortScroll=listElement.scrollTop;
+		var itemPosition=itemElement.offsetTop;
+		var itemHeight=itemElement.clientHeight;
+
+		var shownBottom=viewPortScroll+viewPortHeight;
+
+		if(itemPosition<viewPortScroll) {
+			listElement.scrollTop=itemPosition;
+		} else if((itemPosition+itemHeight)>shownBottom) {
+			listElement.scrollTop=(itemPosition+itemHeight)-viewPortHeight;
+		}
+
 	}
 
 });
 
+
+angular.module('accountApp').directive("keypressDirective",function() {
+	return {
+		link: function(scope,element,attrs) {
+			document.onkeydown=function(e) {
+				console.log(e.keyCode);				
+				if(e.keyCode==85) { // Press U
+					scope.moveUp();
+				}else if(e.keyCode==68) { // Press D
+					scope.moveDown();
+				}else if(e.keyCode==83) { // Press S
+					scope.selectItem();
+				}
+				scope.$apply(function() {}); //refresh ui
+			}
+		}
+	}
+});
 
 //var accountApp = angular.module('accountApp', []);
 /*
