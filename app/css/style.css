@@ -55,7 +55,7 @@ h2 {
 }
 
 #showSelected {
-	display: none;
+	/** display: none; */
 	position: absolute;
 	margin-top: -100px;
 	margin-left: -150px;
@@ -68,11 +68,12 @@ h2 {
 	color: #000000;
 	
 }
-
+/*
 #showSelected.show {
 	display: block;
 
 }
+*/
 
 .button {
 	background-image: linear-gradient(-180deg, #65b920, #367e1e);
@@ -86,6 +87,21 @@ h2 {
 	line-height:58px;
 	margin-bottom: 34px;
 }
+
+
+.button:active {
+	background-image: linear-gradient(-180deg, #367e1e,#65b920);
+	height: 58px;
+	vertical-align: middle;
+	padding: 10px;
+	width: 170px;
+	color: #FFFFFF;
+	font-weight: bold;
+	border-radius: 5px 0px 0px 5px; 
+	line-height:58px;
+	margin-bottom: 34px;
+}
+
 
 .button::after {
 	content: ">";

@@ -18,12 +18,12 @@
 				</ul>
 			</div>
 			<div id="controls-area">
-				<div class="button" ng-click="moveUp()"><span>UP</span></div>
-				<div class="button" ng-click="moveDown()"><span>DOWN</span></div>
-				<div class="button" ng-click="selectItem()"><span>SELECT</span></div>
+				<div class="button" ng-disabled="ctrl.display" ng-click="moveUp()"><span>UP</span></div>
+				<div class="button" ng-disabled="ctrl.display" ng-click="moveDown()"><span>DOWN</span></div>
+				<div class="button" ng-disabled="ctrl.display" ng-click="selectItem()"><span>SELECT</span></div>
 			</div>
 
-			<div id="showSelected"  ng-class="{show: ctrl.display == true}">
+			<div id="showSelected" ng-hide="!ctrl.display"  > <!-- ng-class="{show: ctrl.display == true}" -->
 				ID: {{ctrl.accounts[ctrl.selectedIndex].id}}<br/>
 				Name: {{ctrl.accounts[ctrl.selectedIndex].name}}<br/>
 			</div>
