@@ -1,5 +1,49 @@
-var accountApp = angular.module('accountApp', []);
+angular.module('accountApp', []).controller("MainListController",function MainListController($scope,$http) {
+	var self=this;
+	$http.get('/data/accounts.json').then(
+		function(res){
+			self.accounts = res.data;                
+		}
+	);
 
+	this.selectedIndex=0;
+	this.display=false;
+
+	$scope.moveUp=function() {
+		if(self.display==true)
+			return;
+		self.selectedIndex-=1;
+		if(self.selectedIndex<0) {
+			self.selectedIndex=self.accounts.length+self.selectedIndex;
+		}
+
+	}
+
+	$scope.moveDown=function() {
+		if(self.display==true)
+			return;
+		self.selectedIndex=(self.selectedIndex+1)%self.accounts.length;
+	}
+
+	$scope.selectItem=function() {
+		if(self.display==true)
+			return;
+		self.display=true;
+
+		setTimeout(function() {
+			$scope.$apply(function() {
+				self.display=false;
+			});
+
+		},5000);
+		
+	}
+
+});
+
+
+//var accountApp = angular.module('accountApp', []);
+/*
 accountApp.controller("MainListController",function MainListController($scope){
 
 });
@@ -10,6 +54,7 @@ accountApp.controller("AccountListController",function AccountListController($sc
 		function(res){
 			$scope.accounts = res.data;                
 	});
+*/
 /*
 	$scope.accounts=[
 {"id":1,"name":"test-account1"},
@@ -20,6 +65,7 @@ accountApp.controller("AccountListController",function AccountListController($sc
 {"id":6,"name":"test-account6"}
 ];
 */
+/*
 	$scope.selectedIndex=0;
 
 	$rootScope.$on("moveUp",function (event, args) {
@@ -98,6 +144,6 @@ accountApp.controller("DetailsDisplayController",function DetailsDisplayControll
 		},5000);
 	});
 });
-
+*/
 
 
