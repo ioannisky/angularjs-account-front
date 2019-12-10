@@ -1,35 +1,68 @@
-angular.module('accountApp', []).controller("MainListController",function MainListController($scope,$http) {
+angular.module('accountApp', []);
+
+angular.module('accountApp').service("AccountListService",function($http) {
 	var self=this;
-	$http.get('/data/accounts.json').then(
-		function(res){
-			self.accounts = res.data;                
-		}
-	);
-
+	this.accounts=[];
 	this.selectedIndex=0;
-	this.display=false;
-
-	$scope.keyDownEvent=function(event) {
-		alert(event);
-
+	this.updateAccounts=function () {
+		$http.get('/data/accounts.json').then(
+			function(res){
+				self.accounts = res.data;                
+			}
+		);
 	}
+	this.moveUp=function() {
+		this.selectedIndex=(this.accounts.length+this.selectedIndex-1)%this.accounts.length;
+	}
+
+	this.moveDown=function() {
+		this.selectedIndex=(this.selectedIndex+1)%this.accounts.length;
+	}
+
+
+	this.updateAccounts();
+
+	return this;
+
+
+});
+
+angular.module('accountApp').controller("MainListController",function ($scope,$http,AccountListService) {
+	var self=this;
+
+	//self.accounts=[{"id":1,"name":"asdasd"}];
+
+	//$http.get('/data/accounts.json').then(
+	//	function(res){
+	//		self.accounts = res.data;                
+	//	}
+	//);
+	//this.accounts=AccountListService.accounts;
+	//this.selectedIndex=0;
+	//this.display=false;
+
 
 	$scope.moveUp=function() {
 		if(self.display==true)
 			return;
+
+		AccountListService.moveUp();
+		/*
 		self.selectedIndex-=1;
 		if(self.selectedIndex<0) {
 			self.selectedIndex=self.accounts.length+self.selectedIndex;
 		}
 
 		$scope.scrollToPosition();
+		*/
 	}
 
 	$scope.moveDown=function() {
 		if(self.display==true)
 			return;
-		self.selectedIndex=(self.selectedIndex+1)%self.accounts.length;
-		$scope.scrollToPosition();
+		AccountListService.moveDown();
+		//self.selectedIndex=(self.selectedIndex+1)%self.accounts.length;
+		//$scope.scrollToPosition();
 	}
 
 	$scope.selectItem=function() {
@@ -45,8 +78,15 @@ angular.module('accountApp', []).controller("MainListController",function MainLi
 		},5000);
 	}
 
+	$scope.$watch("AccountListService.selectedIndex",function() {
+		$scope.scrollToPosition();
+	});
+
+
 	$scope.scrollToPosition=function() {
-		var itemElement=document.getElementById("account-"+self.accounts[self.selectedIndex].id);
+		if(AccountListService.accounts.length==0)
+			return;
+		var itemElement=document.getElementById("account-"+AccountListService.accounts[AccountListService.selectedIndex].id);
 		var listElement=document.getElementsByClassName("item-list")[0];
 		
 		var viewPortHeight=listElement.clientHeight;

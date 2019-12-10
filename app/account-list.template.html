@@ -1,0 +1,8 @@
+<div id="accounts-area">
+	<div id="titlebox">AVAILABLE ACCOUNTS</div>
+	<div class="item-list">
+		<ul>
+			<li ng-repeat="account in ad.accounts" id="account-{{account.id}}" ng-class="{selected: account == ad.accounts[ad.selectedIndex]}">{{account.name}}</li>
+		</ul>
+	</div>
+</div>

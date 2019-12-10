@@ -6,19 +6,13 @@
 		<link rel="stylesheet" href="css/style.css" />
 		<script src="lib/angular/angular.js"></script>
 		<script src="app.js"></script>
+		<script src="account-list.component.js"></script>
 	</head>
 	<body>
 		<div id="main-screen" ng-controller="MainListController as ctrl" keypress-directive>
 			<h1>PLEASE SELECT THE <i>FROM</i> ACCOUNT</h1>
 			<h2>To void transaction press cancel.</h2>
-			<div id="accounts-area">
-				<div id="titlebox">AVAILABLE ACCOUNTS</div>
-				<div class="item-list">
-					<ul>
-						<li ng-repeat="account in ctrl.accounts" id="account-{{account.id}}" ng-class="{selected: account == ctrl.accounts[ctrl.selectedIndex]}">{{account.name}}</li>
-					</ul>
-				</div>
-			</div>
+			<account-list ng-model="ctrl.accounts"></account-list>
 			<div id="controls-area">
 				<div class="button" ng-disabled="ctrl.display" ng-click="moveUp()"><span>UP</span></div>
 				<div class="button" ng-disabled="ctrl.display" ng-click="moveDown()"><span>DOWN</span></div>
