@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" ng-app="accountApp">
+	<head>
+		<meta charset="utf-8">
+		<title>AngularJS Account Front</title>
+		<link rel="stylesheet" href="css/style.css" />
+		<script src="lib/angular/angular.js"></script>
+		<script src="app.js"></script>
+	</head>
+	<body>
+		<div id="main-screen" ng-controller="MainListController">
+			<h1>PLEASE SELECT THE <i>FROM</i> ACCOUNT</h1>
+			<h2>To void transaction press cancel.</h2>
+			<div ng-controller="AccountListController" id="accounts-area">
+				<div id="titlebox">AVAILABLE ACCOUNTS</div>
+				<ul>
+					<li ng-repeat="account in accounts" id="account-{{account.id}}" ng-class="{selected: account == accounts[selectedIndex]}">{{account.name}}</li>
+				</ul>
+			</div>
+			<div id="controls-area">
+				<div class="button" ng-controller="UpButtonController" ng-click="clickHandler()"><span>UP</span></div>
+				<div class="button" ng-controller="DownButtonController" ng-click="clickHandler()"><span>DOWN</span></div>
+				<div class="button" ng-controller="SelectButtonController" ng-click="clickHandler()"><span>SELECT</span></div>
+			</div>
+
+			<div id="showSelected" ng-controller="DetailsDisplayController" ng-class="{show: showAccountDetails == true}">
+				ID: {{id}}<br/>
+				Name: {{name}}<br/>
+			</div>
+
+		</div>
+
+
+  </body>
+</html>

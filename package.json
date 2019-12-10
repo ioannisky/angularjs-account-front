@@ -1,0 +1,17 @@
+{
+	"name": "angularjs-account-front",
+	"version": "0.0.0",
+	"dependencies": {
+		"angular": "1.7.x"
+	},
+	"devDependencies": {
+		"http-server": "^0.11.1",
+		"cpx": "^1.5.0"
+	},
+	"scripts": {
+		"start": "http-server ./app -a 0.0.0.0 -p 8000 -c-1",
+		"postupdate-deps": "npm run copy-libs",
+		"postinstall": "npm run copy-libs",
+		"copy-libs": "cpx \"node_modules/{angular,angular-*,bootstrap/dist,jquery/dist}/**/*\" app/lib -C"
+	}
+}
