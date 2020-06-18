@@ -2,7 +2,7 @@
 	"name": "angularjs-account-front",
 	"version": "0.0.0",
 	"dependencies": {
-		"angular": "1.7.x"
+		"angular": "1.8.x"
 	},
 	"devDependencies": {
 		"http-server": "^0.11.1",
